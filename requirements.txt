@@ -5,3 +5,4 @@ textblob>=0.17.0
 python-dotenv>=1.0.0
 gunicorn>=23.0.0
 groq>= 0.20.0
+duckduckgo_search>=7.5.2
