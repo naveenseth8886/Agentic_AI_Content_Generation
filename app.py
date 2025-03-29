@@ -23,7 +23,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # Load API key from environment variable for security
-groq_api_key = os.getenv("GROQ_API_KEY")
+groq_api_key = os.getenv("Groq_API_Key")
 print("GROQ_API_KEY:", groq_api_key)  # Debugging line
 
 if not groq_api_key:
