@@ -46,7 +46,7 @@ TONE_OPTIONS = {
 
 # Research Agent
 research_agent = Agent(
-    model=Groq(id="llama-3.3-70b-versatile", api_key=GROQ_API_KEY),
+    model=Groq(id="llama-3.3-70b-versatile", api_key=groq_api_key),
     tools=[DuckDuckGo(), lambda q: f"X posts (March 28, 2025): {app.config['grok'].search_x(q)}"],
     instructions=[
         "Search DuckDuckGo for trending data on the topic and use the provided X search tool for real-time X insights.",
@@ -59,7 +59,7 @@ research_agent = Agent(
 
 # Writer Agent
 writer_agent = Agent(
-    model=Groq(id="llama-3.3-70b-versatile", api_key=GROQ_API_KEY),
+    model=Groq(id="llama-3.3-70b-versatile", api_key=groq_api_key),
     instructions=[
         "Write varied content using the research and user inputs (platform, goal, topic).",
         "Optimize for the goal: engagement (questions, hooks), visibility (keywords), branding (consistent tone).",
@@ -71,7 +71,7 @@ writer_agent = Agent(
 
 # Formatter Agent
 formatter_agent = Agent(
-    model=Groq(id="llama-3.3-70b-versatile", api_key=GROQ_API_KEY),
+    model=Groq(id="llama-3.3-70b-versatile", api_key=groq_api_key),
     instructions=[
         "Polish the content to fit the platform’s rules (length, style, hashtags).",
         "Remove duplicates and enforce max length strictly.",
@@ -81,7 +81,7 @@ formatter_agent = Agent(
 
 # Analytics Agent
 analytics_agent = Agent(
-    model=Groq(id="llama-3.3-70b-versatile", api_key=GROQ_API_KEY),
+    model=Groq(id="llama-3.3-70b-versatile", api_key=groq_api_key),
     instructions=[
         "Predict engagement metrics (likes, comments, shares) for two content variants based on their text.",
         "Consider factors like: presence of a question (boosts comments), bold hooks (boosts likes), trending keywords (boosts shares), and length (shorter boosts visibility).",
