@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ContentForge</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        select, input[type="text"], input[type="number"] {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+        }
+        input[type="file"] {
+            padding: 8px 0;
+        }
+        button {
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .error {
+            color: red;
+            text-align: center;
+        }
+        .posts {
+            margin-top: 20px;
+        }
+        .post {
+            background: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+        .download {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .download a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .download a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ContentForge</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <label for="platform">Platform:</label>
+            <select name="platform" id="platform" required>
+                <option value="">Select a platform</option>
+                <option value="instagram">Instagram</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="blog">Blog</option>
+                <option value="article">Article</option>
+            </select>
+
+            <label for="goal">Goal:</label>
+            <select name="goal" id="goal" required>
+                <option value="">Select a goal</option>
+                <option value="engagement">Engagement</option>
+                <option value="visibility">Visibility</option>
+                <option value="branding">Branding</option>
+            </select>
+
+            <label for="tone">Tone:</label>
+            <select name="tone" id="tone" required>
+                <option value="">Select a tone</option>
+                <option value="professional">Professional</option>
+                <option value="casual">Casual</option>
+                <option value="humorous">Humorous</option>
+            </select>
+
+            <label for="topic">Topic:</label>
+            <input type="text" name="topic" id="topic" placeholder="Enter your topic" required>
+
+            <label for="count">Number of Posts:</label>
+            <input type="number" name="count" id="count" min="1" max="10" value="1" required>
+
+            <label for="file">Upload Past Posts (Optional):</label>
+            <input type="file" name="file" id="file" accept=".csv,.txt">
+
+            <button type="submit">Generate Content</button>
+        </form>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if posts %}
+    <div class="posts">
+        <h2>Generated Posts (A/B Variants with Predicted Analytics):</h2>
+        {% for post in posts %}
+            <div class="post-variants" style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                <div class="variant" style="width: 45%; padding: 10px; border: 1px solid #ccc;">
+                    <h3>Variant A</h3>
+                    <p>{{ post.variant_a }}</p>
+                    <p>Predicted Analytics: Likes: {{ post.analytics_a.likes }}, Comments: {{ post.analytics_a.comments }}, Shares: {{ post.analytics_a.shares }}</p>
+                    {% if post.analytics_a.likes + post.analytics_a.comments + post.analytics_a.shares > post.analytics_b.likes + post.analytics_b.comments + post.analytics_b.shares %}
+                        <p style="color: green;">Predicted Winner!</p>
+                    {% endif %}
+                </div>
+                <div class="variant" style="width: 45%; padding: 10px; border: 1px solid #ccc;">
+                    <h3>Variant B</h3>
+                    <p>{{ post.variant_b }}</p>
+                    <p>Predicted Analytics: Likes: {{ post.analytics_b.likes }}, Comments: {{ post.analytics_b.comments }}, Shares: {{ post.analytics_b.shares }}</p>
+                    {% if post.analytics_b.likes + post.analytics_b.comments + post.analytics_b.shares > post.analytics_a.likes + post.analytics_a.comments + post.analytics_a.shares %}
+                        <p style="color: green;">Predicted Winner!</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="download">
+        <a href="/download?posts={{ posts_json | safe }}">Download CSV</a>
+    </div>
+{% endif %}
+    </div>
+</body>
+</html>
