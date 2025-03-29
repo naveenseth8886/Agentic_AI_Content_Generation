@@ -23,8 +23,11 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # Load API key from environment variable for security
-load_dotenv()
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+groq_api_key = os.getenv("GROQ_API_KEY")
+print("GROQ_API_KEY:", groq_api_key)  # Debugging line
+
+if not groq_api_key:
+    raise ValueError("GROQ_API_KEY is missing. Please check your environment variables.")
 
 # Define platform-specific rules
 PLATFORM_RULES = {
